@@ -4,6 +4,9 @@
 .LSOverride
 ._*
 
+# Local browser automation artifacts
+.playwright-cli/
+
 # Prerequisites
 *.d
 
