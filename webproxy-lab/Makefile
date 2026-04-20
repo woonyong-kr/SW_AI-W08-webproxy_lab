@@ -7,17 +7,39 @@
 CC = gcc
 CFLAGS = -g -Wall
 LDFLAGS = -lpthread
+OS = $(shell uname -s)
+ARCH = $(shell uname -m)
+PLATFORM = $(OS)-$(ARCH)
+BUILD_DIR = .build/$(PLATFORM)
+PROXY_BIN = $(BUILD_DIR)/proxy.bin
+CSAPP_OBJ = $(BUILD_DIR)/csapp.o
+PROXY_OBJ = $(BUILD_DIR)/proxy.o
+
+.PHONY: all clean handin
 
 all: proxy
 
-csapp.o: csapp.c csapp.h
-	$(CC) $(CFLAGS) -c csapp.c
+$(BUILD_DIR):
+	mkdir -p $@
 
-proxy.o: proxy.c csapp.h
-	$(CC) $(CFLAGS) -c proxy.c
+$(CSAPP_OBJ): csapp.c csapp.h | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c csapp.c -o $@
 
-proxy: proxy.o csapp.o
-	$(CC) $(CFLAGS) proxy.o csapp.o -o proxy $(LDFLAGS)
+$(PROXY_OBJ): proxy.c csapp.h | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c proxy.c -o $@
+
+$(PROXY_BIN): $(PROXY_OBJ) $(CSAPP_OBJ)
+	$(CC) $(CFLAGS) $(PROXY_OBJ) $(CSAPP_OBJ) -o $@ $(LDFLAGS)
+
+proxy: $(PROXY_BIN)
+	printf '%s\n' \
+		'#!/bin/sh' \
+		'set -eu' \
+		'DIR=$$(CDPATH= cd -- "$$(dirname "$$0")" && pwd)' \
+		'BIN="$$DIR/$(PROXY_BIN)"' \
+		'make -C "$$DIR" "$(PROXY_BIN)"' \
+		'exec "$$BIN" "$$@"' > $@
+	chmod +x $@
 
 # 제출할 수 있는 tar 파일을 ../proxylab-handin.tar에 생성합니다.
 # 이 규칙은 수정하지 마세요.
@@ -25,4 +47,4 @@ handin:
 	(make clean; cd ..; tar cvf $(USER)-proxylab-handin.tar proxylab-handout --exclude tiny --exclude nop-server.py --exclude proxy --exclude driver.sh --exclude port-for-user.pl --exclude free-port.sh --exclude ".*")
 
 clean:
-	rm -f *~ *.o proxy core *.tar *.zip *.gzip *.bzip *.gz
+	rm -rf *~ *.o proxy .build core *.tar *.zip *.gzip *.bzip *.gz

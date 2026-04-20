@@ -5,7 +5,7 @@
             "name": "Tiny 웹 서버 디버그",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/webproxy-lab/tiny/tiny",
+            "program": "${workspaceFolder}/webproxy-lab/tiny/.build/Linux-x86_64/tiny.bin",
             "args": [
                 "8000"
             ],
@@ -56,7 +56,7 @@
             "name": "프록시 서버 디버그",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/webproxy-lab/proxy",
+            "program": "${workspaceFolder}/webproxy-lab/.build/Linux-x86_64/proxy.bin",
             "args": [
                 "4500"
             ],

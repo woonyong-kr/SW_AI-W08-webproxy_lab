@@ -2,12 +2,31 @@
 tiny/tiny
 tiny/cgi-bin/adder
 proxy
+.build/
+tiny/.build/
+tiny/cgi-bin/.build/
+echo/.build/
+
+# Driver test artifacts
+.proxy/
+.noproxy/
 
 # MacOS
 .DS_Store
 .AppleDouble
 .LSOverride
 ._*
+
+# Editor temp files
+*~
+*.swp
+*.swo
+
+# Logs and crash dumps
+*.log
+core
+core.*
+vgcore.*
 
 # Prerequisites
 *.d
