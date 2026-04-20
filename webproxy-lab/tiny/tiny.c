@@ -1,10 +1,10 @@
 /* $begin tinymain */
 /*
- * tiny.c - A simple, iterative HTTP/1.0 Web server that uses the
- *     GET method to serve static and dynamic content.
+ * tiny.c - GET 메서드를 사용해 정적/동적 콘텐츠를 제공하는
+ *     단순한 반복형 HTTP/1.0 웹 서버
  *
- * Updated 11/2019 droh
- *   - Fixed sprintf() aliasing issue in serve_static(), and clienterror().
+ * 2019/11 droh 수정
+ *   - serve_static()와 clienterror()에서 sprintf() 별칭 문제 수정
  */
 #include "csapp.h"
 
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
   socklen_t clientlen;
   struct sockaddr_storage clientaddr;
 
-  /* Check command line args */
+  /* 명령행 인자 확인 */
   if (argc != 2)
   {
     fprintf(stderr, "usage: %s <port>\n", argv[0]);

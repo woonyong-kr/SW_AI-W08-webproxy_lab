@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 
-# nop-server.py - This is a server that we use to create head-of-line
-#                 blocking for the concurrency test. It accepts a
-#                 connection, and then spins forever.
+# nop-server.py - 동시성 테스트에서 head-of-line blocking을 만들기 위해
+#                 사용하는 서버입니다. 연결을 하나 받은 뒤에는
+#                 끝없이 대기 상태를 유지합니다.
 #
-# usage: nop-server.py <port>                
+# 사용법: nop-server.py <port>
 #
 import socket
 import sys
 
-#create an INET, STREAMing socket
+# INET, STREAM 소켓 생성
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serversocket.bind(('', int(sys.argv[1])))
 serversocket.listen(5)

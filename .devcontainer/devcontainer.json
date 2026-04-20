@@ -1,5 +1,5 @@
 {
-    "name": "Proxylab Development Container",
+    "name": "웹프록시 랩 개발 컨테이너",
     "dockerFile": "Dockerfile",
     "remoteUser": "jungle",
     "customizations": {

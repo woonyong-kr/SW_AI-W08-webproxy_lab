@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Tiny Web Server",
+            "name": "Tiny 웹 서버 디버그",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/webproxy-lab/tiny/tiny",
@@ -15,35 +15,35 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "/usr/bin/gdb",
-            "preLaunchTask": "Tiny server clean-and-build",
+            "preLaunchTask": "Tiny 서버 정리 후 빌드",
             "setupCommands": [
                 {
-                    "description": "Enable pretty-printing for gdb",
+                    "description": "gdb의 pretty-printing 활성화",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 },
                 {
-                    "description": "Set Disassembly Flavor to Intel",
+                    "description": "디스어셈블리 형식을 Intel 방식으로 설정",
                     "text": "-gdb-set disassembly-flavor intel",
                     "ignoreFailures": true
                 },
                 {
-                    "description": "Set follow-fork-mode to parent",
+                    "description": "follow-fork-mode를 parent로 설정",
                     "text": "-gdb-set follow-fork-mode parent",
                     "ignoreFailures": false
                 },
                 // {
-                //     "description": "Set follow-fork-mode to child",
+                //     "description": "follow-fork-mode를 child로 설정",
                 //     "text": "-gdb-set follow-fork-mode child",
                 //     "ignoreFailures": false
                 // },
                 {
-                    "description": "Set detach-on-fork to on",
+                    "description": "detach-on-fork를 on으로 설정",
                     "text": "-gdb-set detach-on-fork on",
                     "ignoreFailures": false
                 }
                 // {
-                //     "description": "Set detach-on-fork to off",
+                //     "description": "detach-on-fork를 off로 설정",
                 //     "text": "-gdb-set detach-on-fork off",
                 //     "ignoreFailures": false
                 // }
@@ -53,7 +53,7 @@
             }
         },
         {
-            "name": "Debug Proxy Server",
+            "name": "프록시 서버 디버그",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/webproxy-lab/proxy",
@@ -66,35 +66,35 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "/usr/bin/gdb",
-            "preLaunchTask": "Proxy server clean-and-build",
+            "preLaunchTask": "프록시 서버 정리 후 빌드",
             "setupCommands": [
                 {
-                    "description": "Enable pretty-printing for gdb",
+                    "description": "gdb의 pretty-printing 활성화",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 },
                 {
-                    "description": "Set Disassembly Flavor to Intel",
+                    "description": "디스어셈블리 형식을 Intel 방식으로 설정",
                     "text": "-gdb-set disassembly-flavor intel",
                     "ignoreFailures": true
                 },
                 {
-                    "description": "Set follow-fork-mode to parent",
+                    "description": "follow-fork-mode를 parent로 설정",
                     "text": "-gdb-set follow-fork-mode parent",
                     "ignoreFailures": false
                 },
                 // {
-                //     "description": "Set follow-fork-mode to child",
+                //     "description": "follow-fork-mode를 child로 설정",
                 //     "text": "-gdb-set follow-fork-mode child",
                 //     "ignoreFailures": false
                 // },
                 {
-                    "description": "Set detach-on-fork to on",
+                    "description": "detach-on-fork를 on으로 설정",
                     "text": "-gdb-set detach-on-fork on",
                     "ignoreFailures": false
                 }
                 // {
-                //     "description": "Set detach-on-fork to off",
+                //     "description": "detach-on-fork를 off로 설정",
                 //     "text": "-gdb-set detach-on-fork off",
                 //     "ignoreFailures": false
                 // }

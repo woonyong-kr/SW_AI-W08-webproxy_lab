@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Tiny server build",
+            "label": "Tiny 서버 빌드",
             "type": "shell",
             "command": "cd ${workspaceFolder}/webproxy-lab/tiny && make",
             "group": {
@@ -21,7 +21,7 @@
             }
         },
         {
-            "label": "Tiny server clean",
+            "label": "Tiny 서버 정리",
             "type": "shell",
             "command": "cd ${workspaceFolder}/webproxy-lab/tiny && make clean",
             "presentation": {
@@ -34,11 +34,11 @@
             }
         },
         {
-            "label": "Tiny server clean-and-build",
+            "label": "Tiny 서버 정리 후 빌드",
             "dependsOrder": "sequence",
             "dependsOn": [
-                "Tiny server clean",
-                "Tiny server build"
+                "Tiny 서버 정리",
+                "Tiny 서버 빌드"
             ],
             "group": {
                 "kind": "build",
@@ -51,7 +51,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Proxy server build",
+            "label": "프록시 서버 빌드",
             "type": "shell",
             "command": "cd ${workspaceFolder}/webproxy-lab && make",
             "group": {
@@ -70,7 +70,7 @@
             }
         },
         {
-            "label": "Proxy server clean",
+            "label": "프록시 서버 정리",
             "type": "shell",
             "command": "cd ${workspaceFolder}/webproxy-lab && make clean",
             "presentation": {
@@ -83,11 +83,11 @@
             }
         },
         {
-            "label": "Proxy server clean-and-build",
+            "label": "프록시 서버 정리 후 빌드",
             "dependsOrder": "sequence",
             "dependsOn": [
-                "Proxy server clean",
-                "Proxy server build"
+                "프록시 서버 정리",
+                "프록시 서버 빌드"
             ],
             "group": {
                 "kind": "build",
