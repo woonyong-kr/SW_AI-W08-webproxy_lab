@@ -7,10 +7,13 @@ PLATFORM = $(OS)-$(ARCH)
 BUILD_DIR = .build/$(PLATFORM)
 TINY_BIN = $(BUILD_DIR)/tiny.bin
 CSAPP_OBJ = $(BUILD_DIR)/csapp.o
+PORT ?= 8000
 
 # 이 플래그는 Linux 환경에서 Pthreads 라이브러리를 포함합니다.
 # 다른 시스템에서는 다른 설정이 필요할 수 있습니다.
 LIB = -lpthread
+
+.PHONY: all cgi clean run tiny
 
 all: tiny cgi
 
@@ -29,9 +32,12 @@ tiny: $(TINY_BIN)
 		'set -eu' \
 		'DIR=$$(CDPATH= cd -- "$$(dirname "$$0")" && pwd)' \
 		'BIN="$$DIR/$(TINY_BIN)"' \
-		'make -C "$$DIR" "$(TINY_BIN)"' \
+		'make -s -C "$$DIR" "$(TINY_BIN)" >/dev/null' \
 		'exec "$$BIN" "$$@"' > $@
 	chmod +x $@
+
+run: tiny
+	./tiny $(PORT)
 
 cgi:
 	(cd cgi-bin; make)

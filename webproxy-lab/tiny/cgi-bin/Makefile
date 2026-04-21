@@ -6,6 +6,8 @@ PLATFORM = $(OS)-$(ARCH)
 BUILD_DIR = .build/$(PLATFORM)
 ADDER_BIN = $(BUILD_DIR)/adder.bin
 
+.PHONY: all clean adder
+
 all: adder
 
 $(BUILD_DIR):
@@ -20,7 +22,7 @@ adder: $(ADDER_BIN)
 		'set -eu' \
 		'DIR=$$(CDPATH= cd -- "$$(dirname "$$0")" && pwd)' \
 		'BIN="$$DIR/$(ADDER_BIN)"' \
-		'make -C "$$DIR" "$(ADDER_BIN)"' \
+		'make -s -C "$$DIR" "$(ADDER_BIN)" >/dev/null' \
 		'exec "$$BIN" "$$@"' > $@
 	chmod +x $@
 
