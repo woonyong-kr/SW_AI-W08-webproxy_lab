@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
 
 void doit(int fd) {
   int is_static;
-  int is_head = 0; /* 숙제 11.11: HEAD 메서드 지원 */
+  int is_head = 0;
   struct stat sbuf;
   char buf[MAXLINE], method[MAXLINE], uri[MAXLINE], version[MAXLINE];
   char filename[MAXLINE], cgiargs[MAXLINE];
@@ -64,7 +64,6 @@ void doit(int fd) {
   }
   (void)version;
 
-  /* 숙제 11.11: GET과 HEAD 메서드를 모두 허용 */
   if (!strcasecmp(method, "HEAD")) {
     is_head = 1;
   } else if (strcasecmp(method, "GET")) {
@@ -157,12 +156,10 @@ void serve_static(int fd, char* filename, int filesize, int head_only) {
                  filesize, filetype);
   Rio_writen(fd, buf, (size_t)len);
 
-  /* 숙제 11.11: HEAD 요청이면 본문을 전송하지 않음 */
   if (head_only || filesize == 0) {
     return;
   }
 
-  /* 숙제 11.9: mmap 대신 malloc + rio_readn 사용 */
   srcfd = Open(filename, O_RDONLY, 0);
   srcp = (char *)Malloc((size_t)filesize);
   Rio_readn(srcfd, srcp, (size_t)filesize);
