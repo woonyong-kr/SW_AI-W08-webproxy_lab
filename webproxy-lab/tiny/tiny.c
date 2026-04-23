@@ -147,11 +147,13 @@ void serve_static(int fd, char* filename, int filesize) {
     return;
   }
 
+  /* 숙제 11.9: mmap 대신 malloc + rio_readn 사용 */
   srcfd = Open(filename, O_RDONLY, 0);
-  srcp = Mmap(0, (size_t)filesize, PROT_READ, MAP_PRIVATE, srcfd, 0);
+  srcp = (char *)Malloc((size_t)filesize);
+  Rio_readn(srcfd, srcp, (size_t)filesize);
   Close(srcfd);
   Rio_writen(fd, srcp, (size_t)filesize);
-  Munmap(srcp, (size_t)filesize);
+  Free(srcp);
 }
 
 void get_filetype(char* filename, char* filetype) {
