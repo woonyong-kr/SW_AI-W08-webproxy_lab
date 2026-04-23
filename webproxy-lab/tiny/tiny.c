@@ -163,6 +163,8 @@ void get_filetype(char* filename, char* filetype) {
     strcpy(filetype, "image/png");
   } else if (strstr(filename, ".jpg") || strstr(filename, ".jpeg")) {
     strcpy(filetype, "image/jpeg");
+  } else if (strstr(filename, ".mpg") || strstr(filename, ".mpeg")) {
+    strcpy(filetype, "video/mpeg");
   } else {
     strcpy(filetype, "text/plain");
   }
