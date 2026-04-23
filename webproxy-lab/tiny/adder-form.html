@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Adder - Internet Addition Portal</title>
+</head>
+<body>
+  <h1>Welcome to add.com</h1>
+  <h2>THE Internet addition portal</h2>
+  <p>Enter two numbers to add:</p>
+
+  <form action="/cgi-bin/adder" method="GET">
+    <label for="n1">Number 1:</label>
+    <input type="text" id="n1" name="n1" value="15000">
+    <br><br>
+    <label for="n2">Number 2:</label>
+    <input type="text" id="n2" name="n2" value="213">
+    <br><br>
+    <input type="submit" value="Add">
+  </form>
+
+  <hr>
+  <p><em>Tiny Web Server - CSAPP Homework 11.10</em></p>
+</body>
+</html>
