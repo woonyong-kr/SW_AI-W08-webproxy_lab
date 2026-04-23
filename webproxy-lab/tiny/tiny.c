@@ -11,7 +11,7 @@
 void doit(int fd);
 void read_requesthdrs(rio_t* rp);
 int parse_uri(char* uri, char* filename, char* cgiargs);
-void serve_static(int fd, char* filename, int filesize);
+void serve_static(int fd, char* filename, int filesize, int head_only);
 void get_filetype(char* filename, char* filetype);
 void serve_dynamic(int fd, char* filename, char* cgiargs);
 void clienterror(int fd, char* cause, char* errnum, char* shortmsg,
@@ -42,6 +42,7 @@ int main(int argc, char** argv) {
 
 void doit(int fd) {
   int is_static;
+  int is_head = 0; /* 숙제 11.11: HEAD 메서드 지원 */
   struct stat sbuf;
   char buf[MAXLINE], method[MAXLINE], uri[MAXLINE], version[MAXLINE];
   char filename[MAXLINE], cgiargs[MAXLINE];
@@ -63,7 +64,10 @@ void doit(int fd) {
   }
   (void)version;
 
-  if (strcasecmp(method, "GET")) {
+  /* 숙제 11.11: GET과 HEAD 메서드를 모두 허용 */
+  if (!strcasecmp(method, "HEAD")) {
+    is_head = 1;
+  } else if (strcasecmp(method, "GET")) {
     clienterror(fd, method, "501", "Not implemented",
                 "Tiny does not implement this method");
     return;
@@ -83,14 +87,24 @@ void doit(int fd) {
                   "Tiny couldn't read the file");
       return;
     }
-    serve_static(fd, filename, (int)sbuf.st_size);
+    serve_static(fd, filename, (int)sbuf.st_size, is_head);
   } else {
     if (!S_ISREG(sbuf.st_mode) || !(S_IXUSR & sbuf.st_mode)) {
       clienterror(fd, filename, "403", "Forbidden",
                   "Tiny couldn't run the CGI program");
       return;
     }
-    serve_dynamic(fd, filename, cgiargs);
+    if (is_head) {
+      /* HEAD 요청에는 동적 콘텐츠의 헤더만 반환 */
+      char buf_head[MAXLINE];
+      int len_head = snprintf(buf_head, sizeof(buf_head),
+                              "HTTP/1.0 200 OK\r\n"
+                              "Server: Tiny Web Server\r\n"
+                              "\r\n");
+      Rio_writen(fd, buf_head, (size_t)len_head);
+    } else {
+      serve_dynamic(fd, filename, cgiargs);
+    }
   }
 }
 
@@ -126,7 +140,7 @@ int parse_uri(char* uri, char* filename, char* cgiargs) {
   return 0;
 }
 
-void serve_static(int fd, char* filename, int filesize) {
+void serve_static(int fd, char* filename, int filesize, int head_only) {
   int srcfd;
   char* srcp;
   char filetype[MAXLINE];
@@ -143,7 +157,8 @@ void serve_static(int fd, char* filename, int filesize) {
                  filesize, filetype);
   Rio_writen(fd, buf, (size_t)len);
 
-  if (filesize == 0) {
+  /* 숙제 11.11: HEAD 요청이면 본문을 전송하지 않음 */
+  if (head_only || filesize == 0) {
     return;
   }
 
